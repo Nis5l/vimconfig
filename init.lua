@@ -55,7 +55,7 @@ require('packer').startup(function()
 	}
 
 	use { 'ms-jpq/coq_nvim', branch = 'coq' }
-	use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
+--	use { 'ms-jpq/coq.artifacts', branch = 'artifacts' }
 
 	--git
 	use 'mhinz/vim-signify'
@@ -69,8 +69,7 @@ require('packer').startup(function()
 			  ensure_installed = "all",
 			  highlight = {
 				enable = true,
-			  },
-			}
+			  }, }
 		end,
 	}
 	use 'nvim-lua/popup.nvim'
@@ -123,9 +122,17 @@ require('packer').startup(function()
 		end,
 	}
 
-	use "alec-gibson/nvim-tetris"
+	use { "alec-gibson/nvim-tetris", branch = 'dev' }
 	use "petertriho/nvim-scrollbar"
+	use {
+		"ianding1/leetcode.vim",
+		config = function()
+		end,
+	}
 end)
+
+vim.g.leetcode_browser = "firefox"
+vim.g.leetcode_solution_filetype = "c"
 
 vim.opt.termguicolors = true
 
@@ -163,9 +170,12 @@ vim.api.nvim_set_keymap('n', 'gh', ':lua vim.lsp.buf.hover()<CR>', { noremap = t
 
 
 vim.g.coq_settings = {
-  auto_start = 'shut-up',
-  ['keymap.recommended'] = true,
-  ['keymap.jump_to_mark'] = '',
+	auto_start = 'shut-up',
+	['keymap.recommended'] = true,
+	['keymap.jump_to_mark'] = '',
+	["clients.snippets.warn"] = {},
+--	["clients.tabnine.enabled"] = true,
+--	["display.pum.x_truncate_len"] = 1000,
 }
 
 local lsp = require "lspconfig"
@@ -180,7 +190,9 @@ lsp.rust_analyzer.setup(setup())
 lsp.tsserver.setup(setup())
 lsp.vimls.setup(setup())
 lsp.ocamlls.setup(setup())
+lsp.pylsp.setup(setup())
 lsp.intelephense.setup(setup({cmd = { "intelephense", "--stdio" }}))
+lsp.ccls.setup(setup())
 
 local colors = require("tokyonight.colors").setup()
 
