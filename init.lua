@@ -129,6 +129,8 @@ require('packer').startup(function()
 		config = function()
 		end,
 	}
+
+	use { "ray-x/lsp_signature.nvim" }
 end)
 
 vim.g.leetcode_browser = "firefox"
@@ -193,6 +195,8 @@ lsp.ocamlls.setup(setup())
 lsp.pylsp.setup(setup())
 lsp.intelephense.setup(setup({cmd = { "intelephense", "--stdio" }}))
 lsp.ccls.setup(setup())
+
+require("lsp_signature").setup({})
 
 local colors = require("tokyonight.colors").setup()
 
